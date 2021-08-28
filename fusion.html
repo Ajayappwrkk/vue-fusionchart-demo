@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Create your First Chart</title>
+    <style type="text/css">
+      #container {
+        width: 100%;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="container"></div>
+    <script src="https://cdn.fusioncharts.com/fusioncharts/3.18.0-dev/fusioncharts.js"></script>
+     <script src="data38yrs.js"></script>
+     <!-- <script src="data3yrs - Copy.js"></script> -->
+
+    <script>
+         let schema = [
+        {
+          name: "Time",
+          type: "date",
+          format: "%-m/%-d/%Y",
+          // format: "%-m/%Y",
+        },
+        {
+          name: "Sales",
+          type: "number",
+        },
+      ];
+
+      let fusionDataStore = new FusionCharts.DataStore();
+      let fusionTable = fusionDataStore.createDataTable(data, schema);
+
+      const chart = new FusionCharts({
+        type: "timeseries",
+        renderAt: "container",
+        width: "90%",
+        height: 650,
+        dataSource: {
+          data: fusionTable,
+          caption: {
+            text: "Online Sales of a SuperStore in the US",
+          },
+          chart: {
+            //startOfWeek:,
+          },
+          xAxis: {
+            plot: "time",
+			initialInterval: {
+              from: "12/31/2036",
+              to: "12/31/2012"
+              },
+            binning: {
+              year: [],
+              month: [],
+			  week: [1],
+              day: [],
+              hour: [],
+              minute: [],
+              second: [],
+              millisecond: [], 
+            },
+          },
+          yAxis: [
+            {
+              plot: {
+                value: "Sales",
+                aggregation: "Average",
+              },
+            },
+          ],
+        },
+      });
+
+      chart.render();
+
+    </script>
